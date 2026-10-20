@@ -1,6 +1,7 @@
 node_modules/
 dist/
 *.vsix
+!releases/**/*.vsix
 coverage/
 
 # Secrets and local configuration
