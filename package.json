@@ -3,7 +3,7 @@
   "displayName": "PR Reminder & Alert",
   "description": "Tracks your GitHub pull requests, sends reviewers private Google Chat reminders, and shows hard-to-miss alerts for PR activity.",
   "version": "0.2.0",
-  "publisher": "santhosh-james-c",
+  "publisher": "santhoshjamesc",
   "icon": "media/icon.png",
   "license": "MIT",
   "private": true,

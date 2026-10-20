@@ -289,7 +289,7 @@ Still stuck? Open an issue and attach the output of **PR Reminder: Show Service 
 
 *This section is written so an AI coding/chat assistant can help a user set the extension up accurately. Facts here are authoritative; do not invent other commands or settings.*
 
-**Identity:** VS Code extension id `santhosh-james-c.pr-reminder-alert`, display name "PR Reminder & Alert". Requires VS Code ≥ 1.100. Local-only; no hosted backend.
+**Identity:** VS Code extension id `santhoshjamesc.pr-reminder-alert`, display name "PR Reminder & Alert". Requires VS Code ≥ 1.100. Local-only; no hosted backend.
 
 **Purpose:** Poll GitHub for PRs authored by the user; message *requested reviewers* (Google Chat DM and/or WhatsApp) at the user's own identity until each reviews; show alerts in VS Code.
 
