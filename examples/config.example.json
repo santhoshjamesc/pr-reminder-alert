@@ -1,0 +1,47 @@
+{
+  "github": {
+    "username": "octo-author",
+    "repositories": [
+      "example-org/example-api",
+      "example-org/example-web"
+    ],
+    "includeDrafts": true,
+    "pollIntervalSeconds": 120,
+    "apiBaseUrl": "https://api.github.com"
+  },
+  "reviewers": {
+    "reviewer-one": "reviewer1@example.com",
+    "reviewer-two": "reviewer2@example.com",
+    "@example-org/platform-team": "platform-lead@example.com"
+  },
+  "chat": {
+    "enabled": true,
+    "sendInitialMessage": true,
+    "sendInitialMessageForExistingPrs": false,
+    "maxAttempts": 5
+  },
+  "reminders": {
+    "intervalMinutes": 30,
+    "maxRemindersPerReviewer": 5,
+    "timeZone": "America/New_York",
+    "quietHours": {
+      "enabled": true,
+      "start": "20:00",
+      "end": "08:00",
+      "quietDays": [
+        0,
+        6
+      ]
+    },
+    "countCommentsAsResponse": false,
+    "remindAfterChangesRequested": true
+  },
+  "alerts": {
+    "alertOnHistorical": false,
+    "severity": {
+      "labels_changed": "off",
+      "ci_passed": "normal"
+    },
+    "importantCommentKeywords": []
+  }
+}

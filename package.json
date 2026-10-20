@@ -1,0 +1,942 @@
+{
+  "name": "pr-reminder-alert",
+  "displayName": "PR Reminder & Alert",
+  "description": "Tracks your GitHub pull requests, sends reviewers private Google Chat reminders, and shows hard-to-miss alerts for PR activity.",
+  "version": "0.2.0",
+  "publisher": "santhosh-james-c",
+  "icon": "media/icon.png",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "vscode": "^1.100.0",
+    "node": ">=22.13.0"
+  },
+  "categories": [
+    "Other",
+    "SCM Providers"
+  ],
+  "keywords": [
+    "github",
+    "pull request",
+    "pr",
+    "code review",
+    "reminder",
+    "reviewer",
+    "google chat",
+    "whatsapp",
+    "notification",
+    "alert",
+    "vscode",
+    "vscode-extension",
+    "google-chat",
+    "code-review-reminder",
+    "pr-reminder"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "prReminder.refresh",
+        "title": "Refresh Pull Requests",
+        "category": "PR Reminder",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "prReminder.openDashboard",
+        "title": "Open PR Dashboard",
+        "category": "PR Reminder",
+        "icon": "$(dashboard)"
+      },
+      {
+        "command": "prReminder.pause",
+        "title": "Pause Reminders",
+        "category": "PR Reminder",
+        "icon": "$(debug-pause)"
+      },
+      {
+        "command": "prReminder.resume",
+        "title": "Resume Reminders",
+        "category": "PR Reminder",
+        "icon": "$(debug-start)"
+      },
+      {
+        "command": "prReminder.pausePr",
+        "title": "Pause Reminders for This PR",
+        "category": "PR Reminder",
+        "icon": "$(debug-pause)"
+      },
+      {
+        "command": "prReminder.resumePr",
+        "title": "Resume Reminders for This PR",
+        "category": "PR Reminder",
+        "icon": "$(debug-start)"
+      },
+      {
+        "command": "prReminder.snooze",
+        "title": "Snooze Alerts",
+        "category": "PR Reminder",
+        "icon": "$(bell-slash)"
+      },
+      {
+        "command": "prReminder.acknowledgeAll",
+        "title": "Acknowledge All Alerts",
+        "category": "PR Reminder",
+        "icon": "$(check-all)"
+      },
+      {
+        "command": "prReminder.previewBigAlert",
+        "title": "Preview Big Alert",
+        "category": "PR Reminder"
+      },
+      {
+        "command": "prReminder.testChat",
+        "title": "Test Google Chat Connection",
+        "category": "PR Reminder",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "prReminder.openSettings",
+        "title": "Open Settings",
+        "category": "PR Reminder",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "prReminder.openSelectedPr",
+        "title": "Open Selected PR",
+        "category": "PR Reminder",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "prReminder.setup",
+        "title": "Run Setup Wizard",
+        "category": "PR Reminder",
+        "icon": "$(wand)"
+      },
+      {
+        "command": "prReminder.filter",
+        "title": "Filter Pull Requests",
+        "category": "PR Reminder",
+        "icon": "$(filter)"
+      },
+      {
+        "command": "prReminder.clearFilter",
+        "title": "Clear Filter",
+        "category": "PR Reminder",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "prReminder.retryMessages",
+        "title": "Retry Failed Reviewer Messages",
+        "category": "PR Reminder",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "prReminder.simulateAlerts",
+        "title": "Simulate Alerts (Sample Normal + Big)",
+        "category": "PR Reminder",
+        "icon": "$(bell)"
+      },
+      {
+        "command": "prReminder.setReminderInterval",
+        "title": "Set Reviewer Reminder Interval",
+        "category": "PR Reminder",
+        "icon": "$(clock)"
+      },
+      {
+        "command": "prReminder.clearFailedMessages",
+        "title": "Clear Failed Reviewer Messages",
+        "category": "PR Reminder",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "prReminder.toggleQuietMode",
+        "title": "Toggle Quiet Mode",
+        "category": "PR Reminder",
+        "icon": "$(mute)"
+      },
+      {
+        "command": "prReminder.setGitHubToken",
+        "title": "Set GitHub Personal Access Token",
+        "category": "PR Reminder"
+      },
+      {
+        "command": "prReminder.signInGoogle",
+        "title": "Sign in to Google Chat",
+        "category": "PR Reminder",
+        "icon": "$(account)"
+      },
+      {
+        "command": "prReminder.signInGoogleCustomClient",
+        "title": "Sign in to Google Chat with Your Own OAuth Client…",
+        "category": "PR Reminder"
+      },
+      {
+        "command": "prReminder.signOutGoogle",
+        "title": "Sign out of Google Chat",
+        "category": "PR Reminder"
+      },
+      {
+        "command": "prReminder.linkWhatsApp",
+        "title": "Link WhatsApp (scan QR code)",
+        "category": "PR Reminder",
+        "icon": "$(device-mobile)"
+      },
+      {
+        "command": "prReminder.testWhatsApp",
+        "title": "Test WhatsApp Connection",
+        "category": "PR Reminder"
+      },
+      {
+        "command": "prReminder.unlinkWhatsApp",
+        "title": "Unlink WhatsApp",
+        "category": "PR Reminder"
+      },
+      {
+        "command": "prReminder.setRemoteToken",
+        "title": "Set Remote Service API Token",
+        "category": "PR Reminder"
+      },
+      {
+        "command": "prReminder.clearSecrets",
+        "title": "Delete Stored Credentials",
+        "category": "PR Reminder"
+      },
+      {
+        "command": "prReminder.restartService",
+        "title": "Restart Notification Service",
+        "category": "PR Reminder",
+        "icon": "$(debug-restart)"
+      },
+      {
+        "command": "prReminder.showLogs",
+        "title": "Show Service Logs",
+        "category": "PR Reminder",
+        "icon": "$(output)"
+      },
+      {
+        "command": "prReminder.toggleChat",
+        "title": "Turn Google Chat Messages On/Off",
+        "category": "PR Reminder",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "prReminder.toggleWhatsApp",
+        "title": "Turn WhatsApp Messages On/Off",
+        "category": "PR Reminder",
+        "icon": "$(device-mobile)"
+      },
+      {
+        "command": "prReminder.enableChannel",
+        "title": "Turn On",
+        "category": "PR Reminder",
+        "icon": "$(circle-large-outline)"
+      },
+      {
+        "command": "prReminder.disableChannel",
+        "title": "Turn Off",
+        "category": "PR Reminder",
+        "icon": "$(pass-filled)"
+      },
+      {
+        "command": "prReminder.manageGoogleChat",
+        "title": "Manage Google Chat (Sign In, Switch Account, Change Client)…",
+        "category": "PR Reminder",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "prReminder.manageWhatsApp",
+        "title": "Manage WhatsApp (Link, Re-link, Unlink)…",
+        "category": "PR Reminder",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "prReminder.retryMessage",
+        "title": "Retry This Message",
+        "category": "PR Reminder",
+        "icon": "$(sync)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "prReminder.pausePr",
+          "when": "false"
+        },
+        {
+          "command": "prReminder.resumePr",
+          "when": "false"
+        },
+        {
+          "command": "prReminder.enableChannel",
+          "when": "false"
+        },
+        {
+          "command": "prReminder.disableChannel",
+          "when": "false"
+        },
+        {
+          "command": "prReminder.retryMessage",
+          "when": "false"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "prReminder.acknowledgeAll",
+        "key": "ctrl+alt+shift+a",
+        "mac": "cmd+alt+shift+a"
+      },
+      {
+        "command": "prReminder.openDashboard",
+        "key": "ctrl+alt+shift+p",
+        "mac": "cmd+alt+shift+p"
+      }
+    ],
+    "configuration": [
+      {
+        "title": "GitHub",
+        "properties": {
+          "prReminder.github.username": {
+            "type": "string",
+            "default": "",
+            "markdownDescription": "Your GitHub username. Only pull requests **authored by this account** are tracked.",
+            "order": 1,
+            "scope": "application"
+          },
+          "prReminder.github.authMethod": {
+            "type": "string",
+            "enum": [
+              "vscode",
+              "pat"
+            ],
+            "enumDescriptions": [
+              "Use VS Code's built-in GitHub sign-in",
+              "Use a (fine-grained) personal access token stored in Secret Storage"
+            ],
+            "default": "pat",
+            "order": 2,
+            "scope": "application"
+          },
+          "prReminder.github.repositories": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+            },
+            "default": [],
+            "markdownDescription": "Repositories to monitor (`owner/name`). **Leave empty (recommended) to track every pull request you author across all repositories and organizations your token can access**, regardless of which folder is open in VS Code.",
+            "order": 3,
+            "scope": "application"
+          },
+          "prReminder.github.includeDrafts": {
+            "type": "boolean",
+            "default": true,
+            "description": "Track draft pull requests (reviewers of drafts are never emailed).",
+            "order": 4,
+            "scope": "application"
+          },
+          "prReminder.github.pollIntervalSeconds": {
+            "type": "number",
+            "default": 120,
+            "minimum": 30,
+            "maximum": 3600,
+            "description": "How often the service polls GitHub.",
+            "order": 5,
+            "scope": "application"
+          },
+          "prReminder.github.hideClosedPrsAfterDays": {
+            "type": "number",
+            "default": 7,
+            "minimum": 0,
+            "maximum": 3650,
+            "description": "Remove merged and closed PRs from the PR list this many days after they were merged or closed (0 = as soon as they merge or close). Their alerts stay in Activity.",
+            "order": 6,
+            "scope": "application"
+          },
+          "prReminder.github.apiBaseUrl": {
+            "type": "string",
+            "default": "https://api.github.com",
+            "description": "GitHub REST API base URL (change for GitHub Enterprise Server).",
+            "order": 6,
+            "scope": "application"
+          }
+        }
+      },
+      {
+        "title": "Reviewers",
+        "properties": {
+          "prReminder.reviewers": {
+            "type": "object",
+            "default": {},
+            "additionalProperties": {
+              "type": "string",
+              "format": "email"
+            },
+            "markdownDescription": "Map GitHub usernames (or `@org/team-slug`) to their **Google Workspace email**, used to open a private Google Chat DM, e.g. `{ \"reviewer-one\": \"reviewer1@company.com\" }`. Only mapped reviewers are messaged. Edit visually in **PR Reminder: Open PR Dashboard → Reviewer mapping**.",
+            "scope": "application"
+          }
+        }
+      },
+      {
+        "title": "Google Chat",
+        "properties": {
+          "prReminder.chat.googleClientId": {
+            "type": "string",
+            "default": "",
+            "markdownDescription": "OAuth client ID (type *Desktop app*) from **your own** free Google Cloud project with the Google Chat API enabled. The client secret is entered by **PR Reminder: Sign in to Google Chat** and kept in the OS keychain. One person can create the client and share it with the team. See README → *Google Chat setup*.",
+            "pattern": "^$|\\.apps\\.googleusercontent\\.com$",
+            "order": 0,
+            "scope": "application"
+          },
+          "prReminder.chat.enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Send reviewers private Google Chat direct messages from your account. Sign in with \"PR Reminder: Sign in to Google Chat\".",
+            "order": 1,
+            "scope": "application"
+          },
+          "prReminder.chat.sendInitialMessage": {
+            "type": "boolean",
+            "default": true,
+            "description": "DM reviewers when their review is first requested.",
+            "order": 2,
+            "scope": "application"
+          },
+          "prReminder.chat.sendInitialMessageForExistingPrs": {
+            "type": "boolean",
+            "default": false,
+            "description": "Also send the initial DM for PRs that already existed when monitoring started.",
+            "order": 3,
+            "scope": "application"
+          },
+          "prReminder.chat.maxAttempts": {
+            "type": "number",
+            "default": 5,
+            "minimum": 1,
+            "maximum": 10,
+            "description": "Delivery attempts per message before it is marked failed.",
+            "order": 4,
+            "scope": "application"
+          }
+        }
+      },
+      {
+        "title": "WhatsApp",
+        "properties": {
+          "prReminder.whatsapp.enabled": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Also message reviewers on **WhatsApp**, sent from your own WhatsApp account through WhatsApp Web (link it once with **PR Reminder: Link WhatsApp**). Uses an automated WhatsApp Web session, which WhatsApp does not officially support; keep volumes low.",
+            "order": 1,
+            "scope": "application"
+          },
+          "prReminder.whatsapp.numbers": {
+            "type": "object",
+            "default": {},
+            "additionalProperties": {
+              "type": "string"
+            },
+            "markdownDescription": "GitHub login → WhatsApp number with country code, e.g. `{ \"reviewer-one\": \"+919876543210\" }`. Easier to edit in **PR Dashboard → Reviewer mapping**.",
+            "order": 2,
+            "scope": "application"
+          },
+          "prReminder.whatsapp.chromePath": {
+            "type": "string",
+            "default": "",
+            "markdownDescription": "Path to Chrome, Chromium, Edge or Brave used for WhatsApp Web. Leave empty to auto-detect.",
+            "order": 3,
+            "scope": "application"
+          }
+        }
+      },
+      {
+        "title": "Reminders",
+        "properties": {
+          "prReminder.reminders.intervalMinutes": {
+            "type": "number",
+            "default": 30,
+            "minimum": 1,
+            "maximum": 10080,
+            "description": "Minutes between reminder DMs to a pending reviewer.",
+            "order": 1,
+            "scope": "application"
+          },
+          "prReminder.reminders.maxRemindersPerReviewer": {
+            "type": "number",
+            "default": 5,
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Maximum reminders per reviewer per PR (per review request).",
+            "order": 2,
+            "scope": "application"
+          },
+          "prReminder.reminders.timeZone": {
+            "type": "string",
+            "default": "",
+            "markdownDescription": "IANA time zone for quiet hours (e.g. `Europe/Berlin`). Empty = this computer's time zone.",
+            "order": 3,
+            "scope": "application"
+          },
+          "prReminder.reminders.quietHours.enabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Do not message reviewers during quiet hours.",
+            "order": 4,
+            "scope": "application"
+          },
+          "prReminder.reminders.quietHours.start": {
+            "type": "string",
+            "default": "22:00",
+            "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+            "description": "Quiet hours start (HH:MM, 24h).",
+            "order": 5,
+            "scope": "application"
+          },
+          "prReminder.reminders.quietHours.end": {
+            "type": "string",
+            "default": "08:00",
+            "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+            "description": "Quiet hours end (HH:MM, 24h).",
+            "order": 6,
+            "scope": "application"
+          },
+          "prReminder.reminders.quietHours.quietDays": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 6
+            },
+            "default": [],
+            "description": "Days with no reviewer messages at all (0 = Sunday ... 6 = Saturday).",
+            "order": 7,
+            "scope": "application"
+          },
+          "prReminder.reminders.countCommentsAsResponse": {
+            "type": "boolean",
+            "default": false,
+            "description": "Treat a plain or inline comment from a reviewer as a response (stops reminders). Off = only submitted reviews count.",
+            "order": 8,
+            "scope": "application"
+          },
+          "prReminder.reminders.remindAfterChangesRequested": {
+            "type": "boolean",
+            "default": true,
+            "description": "Remind reviewers who requested changes again once new commits are pushed.",
+            "order": 9,
+            "scope": "application"
+          }
+        }
+      },
+      {
+        "title": "Alerts",
+        "properties": {
+          "prReminder.alerts.size": {
+            "type": "string",
+            "enum": [
+              "normal",
+              "big"
+            ],
+            "enumDescriptions": [
+              "Notifications, banner and status bar as configured below.",
+              "Also take over the editor with a full black overlay saying what happened on which PR."
+            ],
+            "default": "normal",
+            "description": "How loudly PR alerts are shown. Can also be switched from the dashboard.",
+            "order": 0,
+            "scope": "application"
+          },
+          "prReminder.alerts.bigAlertFullWindow": {
+            "type": "boolean",
+            "default": true,
+            "markdownDescription": "When a big alert appears, switch to Zen mode so it fills the whole VS Code window (side bars, panel, tabs and status bar hidden; fullscreen if `#zenMode.fullScreen#` is on). Your layout is restored when the alert is closed.",
+            "order": 0,
+            "scope": "application"
+          },
+          "prReminder.alerts.bigAlertEvents": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "pr_opened",
+                "pr_reopened",
+                "pr_merged",
+                "pr_closed",
+                "pr_inaccessible",
+                "branch_deleted",
+                "title_changed",
+                "body_changed",
+                "labels_changed",
+                "assignees_changed",
+                "review_requested",
+                "review_request_removed",
+                "review_submitted",
+                "changes_requested",
+                "issue_comment",
+                "review_comment",
+                "reviewer_comment",
+                "commit_pushed",
+                "ci_failed",
+                "ci_passed"
+              ]
+            },
+            "default": [
+              "pr_merged",
+              "pr_closed",
+              "changes_requested",
+              "review_submitted",
+              "reviewer_comment",
+              "issue_comment",
+              "review_comment"
+            ],
+            "description": "Events that show the big black overlay when alert size is \"big\".",
+            "order": 0,
+            "scope": "application"
+          },
+          "prReminder.alerts.highPriorityStyles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "notification",
+                "banner",
+                "sound",
+                "statusBar"
+              ]
+            },
+            "default": [
+              "notification",
+              "banner",
+              "statusBar"
+            ],
+            "uniqueItems": true,
+            "description": "Alert styles for high-priority events.",
+            "order": 1,
+            "scope": "application"
+          },
+          "prReminder.alerts.normalPriorityStyles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "notification",
+                "banner",
+                "sound",
+                "statusBar"
+              ]
+            },
+            "default": [
+              "notification",
+              "statusBar"
+            ],
+            "uniqueItems": true,
+            "description": "Alert styles for normal-priority events.",
+            "order": 2,
+            "scope": "application"
+          },
+          "prReminder.alerts.soundEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Allow sound alerts (also requires \"sound\" in a style list).",
+            "order": 3,
+            "scope": "application"
+          },
+          "prReminder.alerts.soundFile": {
+            "type": "string",
+            "default": "",
+            "description": "Optional path to a custom sound file (.wav/.aiff/.mp3 depending on OS).",
+            "order": 4,
+            "scope": "application"
+          },
+          "prReminder.alerts.repeatUntilAcknowledged": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "pr_opened",
+                "pr_reopened",
+                "pr_merged",
+                "pr_closed",
+                "pr_inaccessible",
+                "branch_deleted",
+                "title_changed",
+                "body_changed",
+                "labels_changed",
+                "assignees_changed",
+                "review_requested",
+                "review_request_removed",
+                "review_submitted",
+                "changes_requested",
+                "issue_comment",
+                "review_comment",
+                "reviewer_comment",
+                "commit_pushed",
+                "ci_failed",
+                "ci_passed"
+              ]
+            },
+            "default": [],
+            "markdownDescription": "Event types that repeat their alert until acknowledged, e.g. `[\"changes_requested\", \"ci_failed\", \"pr_merged\"]`.",
+            "order": 5,
+            "scope": "application"
+          },
+          "prReminder.alerts.repeatIntervalSeconds": {
+            "type": "number",
+            "default": 300,
+            "minimum": 30,
+            "description": "Seconds between repeated alerts.",
+            "order": 6,
+            "scope": "application"
+          },
+          "prReminder.alerts.flashBanner": {
+            "type": "boolean",
+            "default": true,
+            "description": "Briefly flash the in-editor banner when it appears.",
+            "order": 7,
+            "scope": "application"
+          },
+          "prReminder.alerts.bannerSeconds": {
+            "type": "number",
+            "default": 0,
+            "minimum": 0,
+            "description": "Hide the banner after this many seconds (0 = until acknowledged or snoozed).",
+            "order": 8,
+            "scope": "application"
+          },
+          "prReminder.alerts.quietMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Quiet mode: only the status bar counter, no pop-ups, banners or sounds.",
+            "order": 9,
+            "scope": "application"
+          },
+          "prReminder.alerts.alertOnHistorical": {
+            "type": "boolean",
+            "default": false,
+            "description": "Alert on events found during the first synchronization (normally only a baseline is recorded).",
+            "order": 10,
+            "scope": "application"
+          },
+          "prReminder.alerts.severity": {
+            "type": "object",
+            "default": {},
+            "propertyNames": {
+              "enum": [
+                "pr_opened",
+                "pr_reopened",
+                "pr_merged",
+                "pr_closed",
+                "pr_inaccessible",
+                "branch_deleted",
+                "title_changed",
+                "body_changed",
+                "labels_changed",
+                "assignees_changed",
+                "review_requested",
+                "review_request_removed",
+                "review_submitted",
+                "changes_requested",
+                "issue_comment",
+                "review_comment",
+                "reviewer_comment",
+                "commit_pushed",
+                "ci_failed",
+                "ci_passed"
+              ]
+            },
+            "additionalProperties": {
+              "type": "string",
+              "enum": [
+                "high",
+                "normal",
+                "off"
+              ]
+            },
+            "markdownDescription": "Override event priorities, e.g. `{ \"commit_pushed\": \"off\", \"issue_comment\": \"high\" }`.",
+            "order": 11,
+            "scope": "application"
+          },
+          "prReminder.alerts.importantCommentKeywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": [],
+            "description": "Reviewer comments containing one of these words are high priority. Empty = every reviewer comment is high priority.",
+            "order": 12,
+            "scope": "application"
+          },
+          "prReminder.alerts.pollSeconds": {
+            "type": "number",
+            "default": 15,
+            "minimum": 5,
+            "maximum": 600,
+            "description": "How often VS Code asks the service for new events.",
+            "order": 13,
+            "scope": "application"
+          }
+        }
+      },
+      {
+        "title": "Service",
+        "properties": {
+          "prReminder.service.mode": {
+            "type": "string",
+            "enum": [
+              "local",
+              "remote"
+            ],
+            "enumDescriptions": [
+              "Start (or reuse) a notification service on this machine",
+              "Connect to a service running elsewhere (e.g. an always-on host)"
+            ],
+            "default": "local",
+            "order": 1,
+            "scope": "application"
+          },
+          "prReminder.service.remoteUrl": {
+            "type": "string",
+            "default": "",
+            "markdownDescription": "Remote service URL (must be `https://` unless it is a loopback/SSH-tunnel address). Token: **PR Reminder: Set Remote Service API Token**.",
+            "order": 2,
+            "scope": "application"
+          },
+          "prReminder.service.pushConfig": {
+            "type": "boolean",
+            "default": true,
+            "description": "Send these settings to the service (local mode always does).",
+            "order": 3,
+            "scope": "application"
+          },
+          "prReminder.service.nodePath": {
+            "type": "string",
+            "default": "",
+            "description": "Node.js (>= 22.13) executable for the local service. Empty = VS Code's bundled runtime.",
+            "order": 4,
+            "scope": "application"
+          },
+          "prReminder.service.keepRunningWhenClosed": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Off (default): reminders are sent only while VS Code is open, and the service stops when the last window closes. On: keep the local service running after VS Code quits, so GitHub polling and reviewer reminders (Google Chat, WhatsApp) continue. The next VS Code window reconnects to it. Logs are also written to `service.log` in the extension's global storage. It does not survive a reboot or log-out, and nothing runs while the computer is asleep.",
+            "order": 5,
+            "scope": "application"
+          }
+        }
+      }
+    ],
+    "walkthroughs": [
+      {
+        "id": "prReminder.getStarted",
+        "title": "Get started with PR Reminder & Alert",
+        "description": "Five small steps: connect GitHub, tell it who your reviewers are, and (optionally) turn on reviewer messages.",
+        "steps": [
+          {
+            "id": "token",
+            "title": "1. Give it a GitHub token",
+            "description": "A token is like a read-only key so the extension can see your pull requests.\n[Set GitHub token](command:prReminder.setGitHubToken)",
+            "media": {
+              "markdown": "media/walkthrough/1-github.md"
+            },
+            "completionEvents": [
+              "onCommand:prReminder.setGitHubToken"
+            ]
+          },
+          {
+            "id": "wizard",
+            "title": "2. Run the setup wizard",
+            "description": "It asks a few simple questions (your GitHub name, which repos, how often to remind).\n[Run setup wizard](command:prReminder.setup)",
+            "media": {
+              "markdown": "media/walkthrough/2-wizard.md"
+            },
+            "completionEvents": [
+              "onCommand:prReminder.setup"
+            ]
+          },
+          {
+            "id": "chat",
+            "title": "3. (Optional) Message reviewers on Google Chat",
+            "description": "Needs Google Workspace. Skip this if you only want alerts for yourself.\n[Sign in to Google Chat](command:prReminder.signInGoogle)",
+            "media": {
+              "markdown": "media/walkthrough/3-chat.md"
+            }
+          },
+          {
+            "id": "whatsapp",
+            "title": "4. (Optional) Message reviewers on WhatsApp",
+            "description": "Scan a QR code once, like WhatsApp Web.\n[Link WhatsApp](command:prReminder.linkWhatsApp)",
+            "media": {
+              "markdown": "media/walkthrough/4-whatsapp.md"
+            }
+          },
+          {
+            "id": "dashboard",
+            "title": "5. Open your dashboard",
+            "description": "See your PRs, who still owes you a review, and what is queued.\n[Open dashboard](command:prReminder.openDashboard)",
+            "media": {
+              "markdown": "media/walkthrough/5-dashboard.md"
+            },
+            "completionEvents": [
+              "onCommand:prReminder.openDashboard"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "dependencies": {
+    "@octokit/plugin-retry": "^8.1.1",
+    "@octokit/plugin-throttling": "^11.0.5",
+    "@octokit/rest": "^22.0.1",
+    "puppeteer-core": "25.12.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.20.5",
+    "@types/vscode": "^1.100.0",
+    "@vscode/vsce": "^4.0.0",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.13.0",
+    "typescript": "~6.0",
+    "typescript-eslint": "^8.71.2",
+    "vitest": "^5.0.5"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:prod": "node scripts/build.mjs --production",
+    "watch": "node scripts/build.mjs --watch",
+    "dev": "node scripts/build.mjs --watch",
+    "service": "node scripts/build.mjs && node dist/service.js",
+    "service:dev": "node --watch dist/service.js",
+    "typecheck": "tsc --noEmit -p .",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run typecheck && npm run lint && npm run test",
+    "vscode:prepublish": "npm run build:prod",
+    "package": "vsce package --no-dependencies",
+    "gen-token": "node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"",
+    "google-signin": "node scripts/build.mjs && node dist/google-signin.js"
+  },
+  "author": {
+    "name": "Santhosh James C",
+    "url": "https://github.com/santhoshjamesc"
+  },
+  "galleryBanner": {
+    "color": "#1f2328",
+    "theme": "dark"
+  },
+  "qna": "marketplace",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/santhoshjamesc/pr-reminder-alert.git"
+  },
+  "homepage": "https://github.com/santhoshjamesc/pr-reminder-alert#readme",
+  "bugs": {
+    "url": "https://github.com/santhoshjamesc/pr-reminder-alert/issues"
+  }
+}

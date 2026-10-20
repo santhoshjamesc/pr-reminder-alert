@@ -1,0 +1,23 @@
+node_modules/
+dist/
+*.vsix
+coverage/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+config.local.json
+*.secret
+*.pem
+
+# Local persistence and logs (may contain PR titles, reviewer emails)
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+data/
+logs/
+*.log
